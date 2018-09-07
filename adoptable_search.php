@@ -49,16 +49,59 @@ $adoptable = new \ServiceType\Adoptable($options);
 /**
  * Sample call for AdoptableSearch operation/method
  */
+$speciesID = "1";
+$sex = "A";
+$ageGroup = "All";
+$location = "";
+$site = "";
+$onHold = "A";
+$orderBy = "ID";
+$primaryBreed = "";
+$secondaryBreed = "";
+$specialNeeds = "";
+$noDogs = "";
+$noCats = "";
+$noKids = "";
+$stageID = "";
 
-if ($adoptable->AdoptableSearch(new \StructType\AdoptableSearch(AUTH_KEY, "", "", "", "", "", "", "", "", "", "", "", "", "", "")) !== false) {
+$animal_ids = array();
+if ($adoptable->AdoptableSearch(new \StructType\AdoptableSearch(AUTH_KEY, $speciesID, $sex, $ageGroup, $location, $site, $onHold, $orderBy, $primaryBreed, $secondaryBreed, $specialNeeds, $noDogs, $noCats, $noKids, $stageID)) !== false) {
     $res = $adoptable->getResult();
     $nodes =  $res->AdoptableSearchResult->getXmlNode();
     foreach($nodes as $node) {
+        $any = $node->getAny() . "\n\n";
+        print_r( $any );
         $any = $node->getAny(false);
-        print_r( $any->getElementsByTagName("ID")[0]->nodeValue );
-        echo ' ';
-        // break;
+        echo $any->getElementsByTagName("ID")[0]->nodeValue . "\n";
+        array_push($animal_ids, $any->getElementsByTagName("ID")[0]->nodeValue);
+        echo $any->getElementsByTagName("Name")[0]->nodeValue . "\n";
+        echo $any->getElementsByTagName("Species")[0]->nodeValue . "\n";
+        echo $any->getElementsByTagName("Sex")[0]->nodeValue . "\n";
+        echo $any->getElementsByTagName("SN")[0]->nodeValue . "\n";
+        echo $any->getElementsByTagName("Age")[0]->nodeValue / 12 . "\n";
+        echo $any->getElementsByTagName("Photo")[0]->nodeValue . "\n\n";
+        break;
     }
 } else {
-    var_dump( $adoptable->getLastError() );
+    print_r( $adoptable->getLastError() );
+}
+
+foreach($animal_ids as $id) {
+    if ($adoptable->AdoptableDetails(new \StructType\AdoptableDetails($id, AUTH_KEY)) !== false) {
+        $res = $adoptable->getResult();
+        $nodes =  $res->AdoptableDetailsResult;
+        $any = $nodes->getAny() . "\n\n";
+        print_r( $any );
+            // $any = $node->getAny(false);
+            // echo $any->getElementsByTagName("ID")[0]->nodeValue . "\n";
+            // echo $any->getElementsByTagName("Name")[0]->nodeValue . "\n";
+            // echo $any->getElementsByTagName("Species")[0]->nodeValue . "\n";
+            // echo $any->getElementsByTagName("Sex")[0]->nodeValue . "\n";
+            // echo $any->getElementsByTagName("SN")[0]->nodeValue . "\n";
+            // echo $any->getElementsByTagName("Age")[0]->nodeValue / 12 . "\n";
+            // echo $any->getElementsByTagName("Photo")[0]->nodeValue . "\n";
+    } else {
+        print_r( $adoptable->getLastError() );
+    }
+    break;
 }
