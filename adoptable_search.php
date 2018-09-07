@@ -14,6 +14,25 @@
  * etc....
  */
 require_once __DIR__ . '/vendor/autoload.php';
+
+$root_dir = dirname(__DIR__) . '/php-petango';
+
+/**
+ * Expose global env() function from oscarotero/env
+ */
+Env::init();
+
+/**
+ * Use Dotenv to set required environment variables and load .env file in root
+ */
+$dotenv = new Dotenv\Dotenv($root_dir);
+if (file_exists($root_dir . '/.env')) {
+    $dotenv->load();
+    $dotenv->required(['AUTH_KEY']);
+}
+
+define('AUTH_KEY', env('AUTH_KEY'));
+
 /**
  * Minimal options
  */
@@ -31,8 +50,7 @@ $adoptable = new \ServiceType\Adoptable($options);
  * Sample call for AdoptableSearch operation/method
  */
 
-$authkey = "TEST123";
-if ($adoptable->AdoptableSearch(new \StructType\AdoptableSearch($authkey, "", "", "", "", "", "", "", "", "", "", "", "", "", "")) !== false) {
+if ($adoptable->AdoptableSearch(new \StructType\AdoptableSearch(AUTH_KEY, "", "", "", "", "", "", "", "", "", "", "", "", "", "")) !== false) {
     print_r($adoptable->getResult());
 } else {
     var_dump( $adoptable->getLastError() );
