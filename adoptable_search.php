@@ -51,7 +51,14 @@ $adoptable = new \ServiceType\Adoptable($options);
  */
 
 if ($adoptable->AdoptableSearch(new \StructType\AdoptableSearch(AUTH_KEY, "", "", "", "", "", "", "", "", "", "", "", "", "", "")) !== false) {
-    print_r($adoptable->getResult());
+    $res = $adoptable->getResult();
+    $nodes =  $res->AdoptableSearchResult->getXmlNode();
+    foreach($nodes as $node) {
+        $any = $node->getAny(false);
+        print_r( $any->getElementsByTagName("ID")[0]->nodeValue );
+        echo ' ';
+        // break;
+    }
 } else {
     var_dump( $adoptable->getLastError() );
 }
