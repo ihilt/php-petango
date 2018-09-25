@@ -1,5 +1,5 @@
 {
-    "name": "providr-packages/php-petango",
+    "name": "php-petango/php-petango",
     "description": "Package generated from main.wsdl using wsdltophp/packagegenerator",
     "require": {
         "php": ">=5.3.3",
