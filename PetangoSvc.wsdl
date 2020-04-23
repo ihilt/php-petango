@@ -1896,16 +1896,16 @@
   </wsdl:binding>
   <wsdl:service name="WsAdoption">
     <wsdl:port name="WsAdoptionSoap" binding="tns:WsAdoptionSoap">
-      <soap:address location="http://wspetangoprd2.azurewebsites.net/webservices/wsadoption.asmx" />
+        <soap:address location="https://ws.petango.com/webservices/wsadoption.asmx" />
     </wsdl:port>
     <wsdl:port name="WsAdoptionSoap12" binding="tns:WsAdoptionSoap12">
-      <soap12:address location="http://wspetangoprd2.azurewebsites.net/webservices/wsadoption.asmx" />
+        <soap12:address location="https://ws.petango.com/webservices/wsadoption.asmx" />
     </wsdl:port>
     <wsdl:port name="WsAdoptionHttpGet" binding="tns:WsAdoptionHttpGet">
-      <http:address location="http://wspetangoprd2.azurewebsites.net/webservices/wsadoption.asmx" />
+        <http:address location="https://ws.petango.com/webservices/wsadoption.asmx" />
     </wsdl:port>
     <wsdl:port name="WsAdoptionHttpPost" binding="tns:WsAdoptionHttpPost">
-      <http:address location="http://wspetangoprd2.azurewebsites.net/webservices/wsadoption.asmx" />
+        <http:address location="https://ws.petango.com/webservices/wsadoption.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
